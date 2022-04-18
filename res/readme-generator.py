@@ -12,7 +12,7 @@ class Solution:
 
     def get_documentation(self):
         fields = []
-        fields.append("[" + self.__get_type_name(self.name) + "](https://github.com/camargodev/project-euler/src/" + self.name + ")")
+        fields.append("[" + self.__get_type_name(self.name) + "](https://github.com/camargodev/project-euler/blob/main/src/" + self.name + ")")
         return fields
 
     def __get_type_name(self, name):
