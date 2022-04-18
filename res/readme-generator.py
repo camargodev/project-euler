@@ -3,6 +3,7 @@ from os.path import isfile, join
 import pathlib
 from urllib import request
 from bs4 import BeautifulSoup
+from math import ceil
 
 class Solution:
     def __init__(self, name):
@@ -40,9 +41,9 @@ def get_source_file_names():
     source_path = get_source_path().replace("res", "src/")
     return [entry for entry in listdir(source_path) if is_valid_file(source_path, entry)]
 
-def fetch_problems_data():
+def fetch_problems_data_from_page(source_url):
     problem_map = dict()
-    page_request = request.urlopen("https://projecteuler.net/archives")
+    page_request = request.urlopen(source_url)
     page_content = page_request.read().decode('utf-8')
     page_html = BeautifulSoup(page_content, "html.parser")
     problems_table = page_html.find("table", {"id": "problems_table"})
@@ -57,10 +58,33 @@ def make_solution_data():
     solution_file_names = get_source_file_names()
     return [Solution(solution_file_name) for solution_file_name in solution_file_names]
 
+def get_highest_id(solutions):
+    ids = [int(solution.id) for solution in solutions]
+    return max(ids)
+
+def fetch_problems_data(solutions):
+    all_problems = dict()
+    pages_urls = get_problem_pages_urls(solutions)
+    for page_url in pages_urls:
+        problems_of_page = fetch_problems_data_from_page(page_url)
+        all_problems = all_problems | problems_of_page
+    return all_problems
+
+def get_problem_pages_urls(solutions):
+    problems_by_page = 50
+    highest_problem_id = get_highest_id(solutions)
+    number_of_pages = ceil(highest_problem_id/problems_by_page)
+    return [get_problems_page_url(index+1) for index in range(number_of_pages)]
+
+def get_problems_page_url(page_index):
+    base_url = "https://projecteuler.net/archives"
+    page_index_append = ";page=" + str(page_index)
+    return base_url if page_index == 1 else base_url + page_index_append
+
 def make_solutions_documentation():
     documentation = []
-    problems = fetch_problems_data()
     solutions = make_solution_data()
+    problems = fetch_problems_data(solutions)
     documentation.append(make_header_line())
     sorted_solutions = sorted(solutions, key=lambda x:int(x.id))
     for solution in sorted_solutions:
