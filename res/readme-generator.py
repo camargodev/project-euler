@@ -39,9 +39,12 @@ def is_valid_file(source_path, file_name):
 
 def get_source_file_names():
     source_path = get_source_path().replace("res", "src/")
-    return [entry for entry in listdir(source_path) if is_valid_file(source_path, entry)]
+    file_names = [entry for entry in listdir(source_path) if is_valid_file(source_path, entry)]
+    print("Found " + str(len(file_names)) + " problem solutions in " + source_path)
+    return file_names
 
 def fetch_problems_data_from_page(source_url):
+    print("Fetching data from page " + source_url)
     problem_map = dict()
     page_request = request.urlopen(source_url)
     page_content = page_request.read().decode('utf-8')
@@ -68,6 +71,7 @@ def fetch_problems_data(solutions):
     for page_url in pages_urls:
         problems_of_page = fetch_problems_data_from_page(page_url)
         all_problems = all_problems | problems_of_page
+    print("Found problem data for " + str(len(all_problems)) + " problems")
     return all_problems
 
 def get_problem_pages_urls(solutions):
@@ -85,16 +89,17 @@ def make_solutions_documentation():
     documentation = []
     solutions = make_solution_data()
     problems = fetch_problems_data(solutions)
-    documentation.append(make_header_line())
+    documentation.extend(make_header_lines())
     sorted_solutions = sorted(solutions, key=lambda x:int(x.id))
     for solution in sorted_solutions:
         problem = problems[solution.id]
+        print("Processing problem " + solution.id)
         solution_line = make_solution_line(problem, solution)
         documentation.append(solution_line)
     return documentation
 
-def make_header_line():
-    return "|Id|Problem|Our solution|\n|-|-|-|"
+def make_header_lines():
+    return ["|Id|Problem|Our solution|", "|-|-|-|"]
 
 def make_solution_line(problem, solution):
     problem_fields = "|".join(problem.get_documentation())
@@ -108,15 +113,18 @@ def read_readme(readme_path):
     readme = open(readme_path)
     # with open(readme_path) as readme:
     lines = readme.readlines()
+    print("Current readme has " + str(len(lines)) + " lines")
     solution_table_header_index = lines.index("## Solution List\n")
     readme.close()
+    print("The first " + str(solution_table_header_index+1) + " will remain equal")
     return lines[0:solution_table_header_index+2]
 
 def update_readme(readme_path):
-    readme_content = read_readme(readme_path)
     solutions = make_solutions_documentation()
+    readme_content = read_readme(readme_path)
     for solution in solutions:
         readme_content.append(solution+"\n")
+    print(str(len(solutions)+1) + " lines will be added to readme")
     readme = open(readme_path, "w")
     readme.writelines(readme_content)
 
