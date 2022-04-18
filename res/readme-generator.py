@@ -15,7 +15,7 @@ class Solution:
         return fields
 
     def __get_type_name(self, name):
-        types = {"py": "Python"}
+        types = {"py": "Python", "cpp": "C++"}
         return types[(name.split("."))[1]]
 
 class Problem:
@@ -38,8 +38,7 @@ def is_valid_file(source_path, file_name):
 
 def get_source_file_names():
     source_path = get_source_path().replace("res", "src/")
-    source_files = [entry for entry in listdir(source_path) if is_valid_file(source_path, entry)]
-    return sorted(source_files)
+    return [entry for entry in listdir(source_path) if is_valid_file(source_path, entry)]
 
 def fetch_problems_data():
     problem_map = dict()
@@ -63,7 +62,8 @@ def make_solutions_documentation():
     problems = fetch_problems_data()
     solutions = make_solution_data()
     documentation.append(make_header_line())
-    for solution in solutions:
+    sorted_solutions = sorted(solutions, key=lambda x:int(x.id))
+    for solution in sorted_solutions:
         problem = problems[solution.id]
         solution_line = make_solution_line(problem, solution)
         documentation.append(solution_line)
