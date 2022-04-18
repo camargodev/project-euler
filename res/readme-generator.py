@@ -94,7 +94,7 @@ def make_solutions_documentation():
     return documentation
 
 def make_header_line():
-    return "|Id|Problem|Our solution|"
+    return "|Id|Problem|Our solution|\n|-|-|-|"
 
 def make_solution_line(problem, solution):
     problem_fields = "|".join(problem.get_documentation())
