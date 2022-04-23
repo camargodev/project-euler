@@ -10,3 +10,4 @@ Our personal solutions for challenges of [Project Euler](https://projecteuler.ne
 |#2|[Even Fibonacci numbers](https://projecteuler.net/problem=2)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-2.py)|
 |#3|[Largest prime factor](https://projecteuler.net/problem=3)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-3.py)|
 |#4|[Largest palindrome product](https://projecteuler.net/problem=4)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-4.py)|
+|#5|[Smallest multiple](https://projecteuler.net/problem=5)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-5.py)|
