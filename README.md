@@ -11,3 +11,6 @@ Our personal solutions for challenges of [Project Euler](https://projecteuler.ne
 |#3|[Largest prime factor](https://projecteuler.net/problem=3)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-3.py)|
 |#4|[Largest palindrome product](https://projecteuler.net/problem=4)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-4.py)|
 |#5|[Smallest multiple](https://projecteuler.net/problem=5)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-5.py)|
+|#6|[Sum square difference](https://projecteuler.net/problem=6)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-6.py)|
+|#7|[10001st prime](https://projecteuler.net/problem=7)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-7.py)|
+|#8|[Largest product in a series](https://projecteuler.net/problem=8)|[Python](https://github.com/camargodev/project-euler/blob/main/src/euler-8.py)|

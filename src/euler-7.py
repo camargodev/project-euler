@@ -19,5 +19,5 @@ def get_nth_prime(n):
             prime_counter += 1 
     return current
 
-print(get_nth_prime(3))
+print(get_nth_prime(10001))
         
