@@ -54,8 +54,13 @@ def fetch_problems_data_from_page(source_url):
         problem_data = [column.text.strip() for column in problem.find_all('td')]
         if len(problem_data) == 0:
             continue
-        problem_map[problem_data[0]] = Problem(problem_data)
+        problem_map[add_leading_zeros(problem_data[0])] = Problem(problem_data)
     return problem_map
+
+def add_leading_zeros(id):
+    number_of_zeros = 3 - len(id)
+    leading_zeros = "0" * number_of_zeros
+    return leading_zeros + id
 
 def make_solution_data():
     solution_file_names = get_source_file_names()
